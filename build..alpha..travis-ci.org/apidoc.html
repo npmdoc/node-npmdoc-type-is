@@ -1,0 +1,290 @@
+<div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a
+
+        href="https://github.com/jshttp/type-is#readme"
+
+    >type-is (v1.6.15)</a>
+</h1>
+<h4>Infer the content-type of a request.</h4>
+<div class="apidocSectionDiv"><a
+    href="#apidoc.tableOfContents"
+    id="apidoc.tableOfContents"
+><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.type-is">module type-is</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.type-is.hasBody">
+            function <span class="apidocSignatureSpan">type-is.</span>hasBody
+            <span class="apidocSignatureSpan">(req)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.type-is.is">
+            function <span class="apidocSignatureSpan">type-is.</span>is
+            <span class="apidocSignatureSpan">(value, types_)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.type-is.match">
+            function <span class="apidocSignatureSpan">type-is.</span>match
+            <span class="apidocSignatureSpan">(expected, actual)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.type-is.normalize">
+            function <span class="apidocSignatureSpan">type-is.</span>normalize
+            <span class="apidocSignatureSpan">(type)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.type-is" id="apidoc.module.type-is">module type-is</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.type-is.hasBody" id="apidoc.element.type-is.hasBody">
+        function <span class="apidocSignatureSpan">type-is.</span>hasBody
+        <span class="apidocSignatureSpan">(req)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function hasbody(req) {
+  return req.headers[&#x27;transfer-encoding&#x27;] !== undefined ||
+    !isNaN(req.headers[&#x27;content-length&#x27;])
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+typeis(req, [&#x27;html&#x27;, &#x27;json&#x27;])     // &#x27;json&#x27;
+typeis(req, [&#x27;application/*&#x27;])    // &#x27;application/json&#x27;
+typeis(req, [&#x27;application/json&#x27;]) // &#x27;application/json&#x27;
+
+typeis(req, [&#x27;html&#x27;]) // false
+```
+
+### typeis.<span class="apidocCodeKeywordSpan">hasBody</span>(request)
+
+Returns a Boolean if the given `request` has a body, regardless of the
+`Content-Type` header.
+
+Having a body has no relation to how large the body is (it may be 0 bytes).
+This is similar to how file existence works. If a body does exist, then this
+indicates that there is data to read from the Node.js request stream.
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.type-is.is" id="apidoc.element.type-is.is">
+        function <span class="apidocSignatureSpan">type-is.</span>is
+        <span class="apidocSignatureSpan">(value, types_)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function typeis(value, types_) {
+  var i
+  var types = types_
+
+  // remove parameters and normalize
+  var val = tryNormalizeType(value)
+
+  // no type or invalid
+  if (!val) {
+    return false
+  }
+
+  // support flattened arguments
+  if (types &#x26;&#x26; !Array.isArray(types)) {
+    types = new Array(arguments.length - 1)
+    for (i = 0; i &#x3c; types.length; i++) {
+      types[i] = arguments[i + 1]
+    }
+  }
+
+  // no types, return the content type
+  if (!types || !types.length) {
+    return val
+  }
+
+  var type
+  for (i = 0; i &#x3c; types.length; i++) {
+    if (mimeMatch(normalize(type = types[i]), val)) {
+      return type[0] === &#x27;+&#x27; || type.indexOf(&#x27;*&#x27;) !== -1
+        ? val
+        : type
+    }
+  }
+
+  // no matches
+  return false
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+  req.on(&#x27;data&#x27;, function (chunk) {
+    // ...
+  })
+}
+```
+
+### type = typeis.<span class="apidocCodeKeywordSpan">is</span>(mediaType, types)
+
+`mediaType` is the [media type](https://tools.ietf.org/html/rfc6838) string. `types` is an array of types.
+
+&#x3c;!-- eslint-disable no-undef --&#x3e;
+
+```js
+var mediaType = &#x27;application/json&#x27;
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.type-is.match" id="apidoc.element.type-is.match">
+        function <span class="apidocSignatureSpan">type-is.</span>match
+        <span class="apidocSignatureSpan">(expected, actual)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function mimeMatch(expected, actual) {
+  // invalid type
+  if (expected === false) {
+    return false
+  }
+
+  // split types
+  var actualParts = actual.split(&#x27;/&#x27;)
+  var expectedParts = expected.split(&#x27;/&#x27;)
+
+  // invalid format
+  if (actualParts.length !== 2 || expectedParts.length !== 2) {
+    return false
+  }
+
+  // validate type
+  if (expectedParts[0] !== &#x27;*&#x27; &#x26;&#x26; expectedParts[0] !== actualParts[0]) {
+    return false
+  }
+
+  // validate suffix wildcard
+  if (expectedParts[1].substr(0, 2) === &#x27;*+&#x27;) {
+    return expectedParts[1].length &#x3c;= actualParts[1].length + 1 &#x26;&#x26;
+      expectedParts[1].substr(1) === actualParts[1].substr(1 - expectedParts[1].length)
+  }
+
+  // validate subtype
+  if (expectedParts[1] !== &#x27;*&#x27; &#x26;&#x26; expectedParts[1] !== actualParts[1]) {
+    return false
+  }
+
+  return true
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.type-is.normalize" id="apidoc.element.type-is.normalize">
+        function <span class="apidocSignatureSpan">type-is.</span>normalize
+        <span class="apidocSignatureSpan">(type)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function normalize(type) {
+  if (typeof type !== &#x27;string&#x27;) {
+    // invalid type
+    return false
+  }
+
+  switch (type) {
+    case &#x27;urlencoded&#x27;:
+      return &#x27;application/x-www-form-urlencoded&#x27;
+    case &#x27;multipart&#x27;:
+      return &#x27;multipart/*&#x27;
+  }
+
+  if (type[0] === &#x27;+&#x27;) {
+    // &#x22;+json&#x22; -&#x3e; &#x22;*/*+json&#x22; expando
+    return &#x27;*/*&#x27; + type
+  }
+
+  return type.indexOf(&#x27;/&#x27;) === -1
+    ? mime.lookup(type)
+    : type
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
