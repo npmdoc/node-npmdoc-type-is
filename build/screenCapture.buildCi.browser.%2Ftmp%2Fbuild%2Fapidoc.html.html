@@ -1,4 +1,4 @@
-<div class="apidocDiv">
+<html><head></head><body><div class="apidocDiv">
 <style>
 /*csslint
 */
@@ -47,17 +47,10 @@
 }
 </style>
 <h1>api documentation for
-    <a
-
-        href="https://github.com/jshttp/type-is#readme"
-
-    >type-is (v1.6.15)</a>
+    <a href="https://github.com/jshttp/type-is#readme">type-is (v1.6.15)</a>
 </h1>
 <h4>Infer the content-type of a request.</h4>
-<div class="apidocSectionDiv"><a
-    href="#apidoc.tableOfContents"
-    id="apidoc.tableOfContents"
-><h1>table of contents</h1></a><ol>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
 
     <li class="apidocModuleLi"><a href="#apidoc.module.type-is">module type-is</a><ol>
 
@@ -188,15 +181,15 @@
   }
 
   // support flattened arguments
-  if (arguments.length &#x3e; 2) {
+  if (arguments.length &gt; 2) {
     types = new Array(arguments.length - 1)
-    for (var i = 0; i &#x3c; types.length; i++) {
+    for (var i = 0; i &lt; types.length; i++) {
       types[i] = arguments[i + 1]
     }
   }
 
   // request content type
-  var value = req.headers[&#x27;content-type&#x27;]
+  var value = req.headers['content-type']
 
   return typeis(value, types)
 }</pre></li>
@@ -213,15 +206,15 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function hasbody(req) {
-  return req.headers[&#x27;transfer-encoding&#x27;] !== undefined ||
-    !isNaN(req.headers[&#x27;content-length&#x27;])
+  return req.headers['transfer-encoding'] !== undefined ||
+    !isNaN(req.headers['content-length'])
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-typeis(req, [&#x27;html&#x27;, &#x27;json&#x27;])     // &#x27;json&#x27;
-typeis(req, [&#x27;application/*&#x27;])    // &#x27;application/json&#x27;
-typeis(req, [&#x27;application/json&#x27;]) // &#x27;application/json&#x27;
+typeis(req, ['html', 'json'])     // 'json'
+typeis(req, ['application/*'])    // 'application/json'
+typeis(req, ['application/json']) // 'application/json'
 
-typeis(req, [&#x27;html&#x27;]) // false
+typeis(req, ['html']) // false
 ```
 
 ### typeis.<span class="apidocCodeKeywordSpan">hasBody</span>(request)
@@ -253,15 +246,15 @@ indicates that there is data to read from the Node.js request stream.
   }
 
   // support flattened arguments
-  if (arguments.length &#x3e; 2) {
+  if (arguments.length &gt; 2) {
     types = new Array(arguments.length - 1)
-    for (var i = 0; i &#x3c; types.length; i++) {
+    for (var i = 0; i &lt; types.length; i++) {
       types[i] = arguments[i + 1]
     }
   }
 
   // request content type
-  var value = req.headers[&#x27;content-type&#x27;]
+  var value = req.headers['content-type']
 
   return typeis(value, types)
 }</pre></li>
@@ -290,9 +283,9 @@ indicates that there is data to read from the Node.js request stream.
   }
 
   // support flattened arguments
-  if (types &#x26;&#x26; !Array.isArray(types)) {
+  if (types &amp;&amp; !Array.isArray(types)) {
     types = new Array(arguments.length - 1)
-    for (i = 0; i &#x3c; types.length; i++) {
+    for (i = 0; i &lt; types.length; i++) {
       types[i] = arguments[i + 1]
     }
   }
@@ -303,9 +296,9 @@ indicates that there is data to read from the Node.js request stream.
   }
 
   var type
-  for (i = 0; i &#x3c; types.length; i++) {
+  for (i = 0; i &lt; types.length; i++) {
     if (mimeMatch(normalize(type = types[i]), val)) {
-      return type[0] === &#x27;+&#x27; || type.indexOf(&#x27;*&#x27;) !== -1
+      return type[0] === '+' || type.indexOf('*') !== -1
         ? val
         : type
     }
@@ -316,7 +309,7 @@ indicates that there is data to read from the Node.js request stream.
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 
-  req.on(&#x27;data&#x27;, function (chunk) {
+  req.on('data', function (chunk) {
     // ...
   })
 }
@@ -326,10 +319,10 @@ indicates that there is data to read from the Node.js request stream.
 
 `mediaType` is the [media type](https://tools.ietf.org/html/rfc6838) string. `types` is an array of types.
 
-&#x3c;!-- eslint-disable no-undef --&#x3e;
+&lt;!-- eslint-disable no-undef --&gt;
 
 ```js
-var mediaType = &#x27;application/json&#x27;
+var mediaType = 'application/json'
 ...</pre></li>
     </ul>
 
@@ -349,8 +342,8 @@ var mediaType = &#x27;application/json&#x27;
   }
 
   // split types
-  var actualParts = actual.split(&#x27;/&#x27;)
-  var expectedParts = expected.split(&#x27;/&#x27;)
+  var actualParts = actual.split('/')
+  var expectedParts = expected.split('/')
 
   // invalid format
   if (actualParts.length !== 2 || expectedParts.length !== 2) {
@@ -358,18 +351,18 @@ var mediaType = &#x27;application/json&#x27;
   }
 
   // validate type
-  if (expectedParts[0] !== &#x27;*&#x27; &#x26;&#x26; expectedParts[0] !== actualParts[0]) {
+  if (expectedParts[0] !== '*' &amp;&amp; expectedParts[0] !== actualParts[0]) {
     return false
   }
 
   // validate suffix wildcard
-  if (expectedParts[1].substr(0, 2) === &#x27;*+&#x27;) {
-    return expectedParts[1].length &#x3c;= actualParts[1].length + 1 &#x26;&#x26;
+  if (expectedParts[1].substr(0, 2) === '*+') {
+    return expectedParts[1].length &lt;= actualParts[1].length + 1 &amp;&amp;
       expectedParts[1].substr(1) === actualParts[1].substr(1 - expectedParts[1].length)
   }
 
   // validate subtype
-  if (expectedParts[1] !== &#x27;*&#x27; &#x26;&#x26; expectedParts[1] !== actualParts[1]) {
+  if (expectedParts[1] !== '*' &amp;&amp; expectedParts[1] !== actualParts[1]) {
     return false
   }
 
@@ -388,24 +381,24 @@ var mediaType = &#x27;application/json&#x27;
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function normalize(type) {
-  if (typeof type !== &#x27;string&#x27;) {
+  if (typeof type !== 'string') {
     // invalid type
     return false
   }
 
   switch (type) {
-    case &#x27;urlencoded&#x27;:
-      return &#x27;application/x-www-form-urlencoded&#x27;
-    case &#x27;multipart&#x27;:
-      return &#x27;multipart/*&#x27;
+    case 'urlencoded':
+      return 'application/x-www-form-urlencoded'
+    case 'multipart':
+      return 'multipart/*'
   }
 
-  if (type[0] === &#x27;+&#x27;) {
-    // &#x22;+json&#x22; -&#x3e; &#x22;*/*+json&#x22; expando
-    return &#x27;*/*&#x27; + type
+  if (type[0] === '+') {
+    // "+json" -&gt; "*/*+json" expando
+    return '*/*' + type
   }
 
-  return type.indexOf(&#x27;/&#x27;) === -1
+  return type.indexOf('/') === -1
     ? mime.lookup(type)
     : type
 }</pre></li>
@@ -435,15 +428,15 @@ var mediaType = &#x27;application/json&#x27;
   }
 
   // support flattened arguments
-  if (arguments.length &#x3e; 2) {
+  if (arguments.length &gt; 2) {
     types = new Array(arguments.length - 1)
-    for (var i = 0; i &#x3c; types.length; i++) {
+    for (var i = 0; i &lt; types.length; i++) {
       types[i] = arguments[i + 1]
     }
   }
 
   // request content type
-  var value = req.headers[&#x27;content-type&#x27;]
+  var value = req.headers['content-type']
 
   return typeis(value, types)
 }</pre></li>
@@ -460,15 +453,15 @@ var mediaType = &#x27;application/json&#x27;
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function hasbody(req) {
-  return req.headers[&#x27;transfer-encoding&#x27;] !== undefined ||
-    !isNaN(req.headers[&#x27;content-length&#x27;])
+  return req.headers['transfer-encoding'] !== undefined ||
+    !isNaN(req.headers['content-length'])
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-typeis(req, [&#x27;html&#x27;, &#x27;json&#x27;])     // &#x27;json&#x27;
-typeis(req, [&#x27;application/*&#x27;])    // &#x27;application/json&#x27;
-typeis(req, [&#x27;application/json&#x27;]) // &#x27;application/json&#x27;
+typeis(req, ['html', 'json'])     // 'json'
+typeis(req, ['application/*'])    // 'application/json'
+typeis(req, ['application/json']) // 'application/json'
 
-typeis(req, [&#x27;html&#x27;]) // false
+typeis(req, ['html']) // false
 ```
 
 ### typeis.<span class="apidocCodeKeywordSpan">hasBody</span>(request)
@@ -504,9 +497,9 @@ indicates that there is data to read from the Node.js request stream.
   }
 
   // support flattened arguments
-  if (types &#x26;&#x26; !Array.isArray(types)) {
+  if (types &amp;&amp; !Array.isArray(types)) {
     types = new Array(arguments.length - 1)
-    for (i = 0; i &#x3c; types.length; i++) {
+    for (i = 0; i &lt; types.length; i++) {
       types[i] = arguments[i + 1]
     }
   }
@@ -517,9 +510,9 @@ indicates that there is data to read from the Node.js request stream.
   }
 
   var type
-  for (i = 0; i &#x3c; types.length; i++) {
+  for (i = 0; i &lt; types.length; i++) {
     if (mimeMatch(normalize(type = types[i]), val)) {
-      return type[0] === &#x27;+&#x27; || type.indexOf(&#x27;*&#x27;) !== -1
+      return type[0] === '+' || type.indexOf('*') !== -1
         ? val
         : type
     }
@@ -530,7 +523,7 @@ indicates that there is data to read from the Node.js request stream.
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 
-  req.on(&#x27;data&#x27;, function (chunk) {
+  req.on('data', function (chunk) {
     // ...
   })
 }
@@ -540,10 +533,10 @@ indicates that there is data to read from the Node.js request stream.
 
 `mediaType` is the [media type](https://tools.ietf.org/html/rfc6838) string. `types` is an array of types.
 
-&#x3c;!-- eslint-disable no-undef --&#x3e;
+&lt;!-- eslint-disable no-undef --&gt;
 
 ```js
-var mediaType = &#x27;application/json&#x27;
+var mediaType = 'application/json'
 ...</pre></li>
     </ul>
 
@@ -563,8 +556,8 @@ var mediaType = &#x27;application/json&#x27;
   }
 
   // split types
-  var actualParts = actual.split(&#x27;/&#x27;)
-  var expectedParts = expected.split(&#x27;/&#x27;)
+  var actualParts = actual.split('/')
+  var expectedParts = expected.split('/')
 
   // invalid format
   if (actualParts.length !== 2 || expectedParts.length !== 2) {
@@ -572,18 +565,18 @@ var mediaType = &#x27;application/json&#x27;
   }
 
   // validate type
-  if (expectedParts[0] !== &#x27;*&#x27; &#x26;&#x26; expectedParts[0] !== actualParts[0]) {
+  if (expectedParts[0] !== '*' &amp;&amp; expectedParts[0] !== actualParts[0]) {
     return false
   }
 
   // validate suffix wildcard
-  if (expectedParts[1].substr(0, 2) === &#x27;*+&#x27;) {
-    return expectedParts[1].length &#x3c;= actualParts[1].length + 1 &#x26;&#x26;
+  if (expectedParts[1].substr(0, 2) === '*+') {
+    return expectedParts[1].length &lt;= actualParts[1].length + 1 &amp;&amp;
       expectedParts[1].substr(1) === actualParts[1].substr(1 - expectedParts[1].length)
   }
 
   // validate subtype
-  if (expectedParts[1] !== &#x27;*&#x27; &#x26;&#x26; expectedParts[1] !== actualParts[1]) {
+  if (expectedParts[1] !== '*' &amp;&amp; expectedParts[1] !== actualParts[1]) {
     return false
   }
 
@@ -602,24 +595,24 @@ var mediaType = &#x27;application/json&#x27;
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function normalize(type) {
-  if (typeof type !== &#x27;string&#x27;) {
+  if (typeof type !== 'string') {
     // invalid type
     return false
   }
 
   switch (type) {
-    case &#x27;urlencoded&#x27;:
-      return &#x27;application/x-www-form-urlencoded&#x27;
-    case &#x27;multipart&#x27;:
-      return &#x27;multipart/*&#x27;
+    case 'urlencoded':
+      return 'application/x-www-form-urlencoded'
+    case 'multipart':
+      return 'multipart/*'
   }
 
-  if (type[0] === &#x27;+&#x27;) {
-    // &#x22;+json&#x22; -&#x3e; &#x22;*/*+json&#x22; expando
-    return &#x27;*/*&#x27; + type
+  if (type[0] === '+') {
+    // "+json" -&gt; "*/*+json" expando
+    return '*/*' + type
   }
 
-  return type.indexOf(&#x27;/&#x27;) === -1
+  return type.indexOf('/') === -1
     ? mime.lookup(type)
     : type
 }</pre></li>
@@ -635,3 +628,4 @@ var mediaType = &#x27;application/json&#x27;
     ]
 </div>
 </div>
+</body></html>
