@@ -1,7 +1,7 @@
 {
     "author": "kai zhu <kaizhu256@gmail.com>",
     "buildNpmdoc": "type-is",
-    "description": "api documentation for [type-is (v1.6.15)](https://github.com/jshttp/type-is#readme) [![npm package](https://img.shields.io/npm/v/npmdoc-type-is.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-type-is) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-type-is.svg)](https://travis-ci.org/npmdoc/node-npmdoc-type-is)",
+    "description": "#### api documentation for  [type-is (v1.6.15)](https://github.com/jshttp/type-is#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-type-is.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-type-is) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-type-is.svg)](https://travis-ci.org/npmdoc/node-npmdoc-type-is)",
     "devDependencies": {
         "electron-lite": "kaizhu256/node-electron-lite#alpha",
         "type-is": "*",
@@ -36,5 +36,5 @@
         "start": "(set -e; export PORT=${PORT:-8080}; utility2 start test.js)",
         "test": "(set -e; export PORT=$(utility2 shServerPortRandom); utility2 test test.js)"
     },
-    "version": "0.0.1"
+    "version": "0.0.2"
 }
